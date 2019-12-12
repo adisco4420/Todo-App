@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Divider, Icon, Modal, Input, Spin } from 'antd';
+import { Table, Divider, Icon, Modal, Input, Spin, Button } from 'antd';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 const api = 'https://agile-refuge-28120.herokuapp.com/api';
 
@@ -31,13 +32,13 @@ class ListUsers extends Component {
       {
         title: 'Action',
         key: 'action',
-        render: (text, record) => (
+        render: (user) => (
           <span>
-            <span><a href=""><Icon type="eye" /> </a></span>
+            <span><Link to={`/user/${user.id}`}><Icon type="eye" /> </Link></span>
             <Divider type="vertical" />
-            <span onClick={() => this.handleUpdate(text)} ><Icon type="edit" /></span>
+            <span onClick={() => this.handleUpdate(user)} ><Icon type="edit" /></span>
             <Divider type="vertical" />
-            <span onClick={() => this.handleDelete(text)}><Icon type="delete" /></span>
+            <span onClick={() => this.handleDelete(user)}><Icon type="delete" /></span>
           </span>
         ),
       },
@@ -129,7 +130,13 @@ class ListUsers extends Component {
           <React.Fragment>
             {
               this.state.users ?
+            <React.Fragment>
+            <div style={{justifyContent: 'flex-end', display: 'flex'}}>
+            <Button onClick={this.showModal} style={{float: 'right', marginTop: '10px'}} type="primary">
+          <Icon type="user-add" /> Add User</Button>
+            </div>
             <Table columns={this.state.columns} dataSource={this.state.users} rowKey="id" />
+            </React.Fragment>
             :
             <div style={{justifyContent: 'center', display: 'flex'}}>
               <Spin size="large" />

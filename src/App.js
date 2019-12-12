@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import './App.css';
 import ListUsers from './user/List';
-import { Layout, Menu, Button, Icon } from 'antd';
-
+import { Layout, Menu } from 'antd';
+import ListTaskForm from './tasks/List';
 const { Header, Content, Footer } = Layout;
+
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +23,7 @@ class App extends Component {
   }
   render() { 
     return (
+      <Router>
       <Layout className="layout">
       <Header className="content-layout">
         <div className="logo" />
@@ -25,20 +33,24 @@ class App extends Component {
           defaultSelectedKeys={['1']}
           style={{ lineHeight: '64px' }}
         >
-          <Menu.Item key="1">Enye Test</Menu.Item>
-          <React.Fragment>
-          <Button onClick={this.handleClick} style={{float: 'right', marginTop: '10px'}} type="primary">
-          <Icon type="user-add" /> Add User</Button>
-          </React.Fragment>
+          <Menu.Item key="1"><Link to="/">Todo App</Link> </Menu.Item>
            </Menu>
       </Header>
       <Content className="content-layout">
         <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+        
+          <Switch>
+          <Route path="/user/:id" component={ListTaskForm} />
+          <Route path="/">
           <ListUsers ref={this.child}/>
+          </Route>
+        </Switch>
+      
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Enye {new Date().getFullYear()} Created by Alabi Sodiq</Footer>
+      <Footer style={{ textAlign: 'center' }}>Todo App {new Date().getFullYear()} Created by Timilehin</Footer>
       </Layout>
+      </Router>
     );
   }
 }
