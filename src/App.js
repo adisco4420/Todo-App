@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import ListUsers from './user/List';
+import { Layout, Menu, Button, Icon } from 'antd';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+const { Header, Content, Footer } = Layout;
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.child = React.createRef()
+  }
+  state = {  }
+  handleClick = () => {
+    this.child.current.showModal();
+  }
+  render() { 
+    return (
+      <Layout className="layout">
+      <Header className="content-layout">
+        <div className="logo" />
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={['1']}
+          style={{ lineHeight: '64px' }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <Menu.Item key="1">Enye Test</Menu.Item>
+          <React.Fragment>
+          <Button onClick={this.handleClick} style={{float: 'right', marginTop: '10px'}} type="primary">
+          <Icon type="user-add" /> Add User</Button>
+          </React.Fragment>
+           </Menu>
+      </Header>
+      <Content className="content-layout">
+        <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+          <ListUsers ref={this.child}/>
+        </div>
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>Enye {new Date().getFullYear()} Created by Alabi Sodiq</Footer>
+      </Layout>
+    );
+  }
 }
-
+ 
 export default App;
